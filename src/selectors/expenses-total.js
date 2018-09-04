@@ -1,17 +1,5 @@
-//import getVisibleExpenses from 'expenses';
-
-
 const selectExpensesTotal = (expenses) => {
-    if (expenses.length === 0) {
-        return 0;
-    } else  {
-
-    var amounts = expenses.map((expense) => expense.amount);
-    var total = amounts.reduce( (sum, value)=> {
-        return sum+value;
-    }, 0);
-    return total;
-    }
+   return expenses.map((expense)=> expense.amount).reduce((sum,value)=> sum+value,0);
 };
 
 export default selectExpensesTotal;
