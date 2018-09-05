@@ -1,23 +1,41 @@
 import uuid from 'uuid';
+import database from '../firebase/firebase';
+//**before
+//1. component calls action generator
+//2. action generator returns an object
+//3. component dispatches object
+//4. redux store changes
+
+//*** with database connection */
+//1. component calls action generator
+//2. action generator returns a function
+//3. component dispatches function (with the help of a middleware (redux-thunk) because reduc only dispatches objects)
+//4. function runs and dispatch an action to update the redux store
 
 //ADD_EXPENSE
-export const addExpense = (
-    {
-        description = '',
-        note = '',
-        amount = 0,
-        createdAt = 0
-    } = {}
-) => ({
+export const addExpense = (expense) => ({
     type: 'ADD_EXPENSE',
-    expense: {
-       id: uuid(),
-       description,
-       note,
-       amount,
-       createdAt
-    }
+    expense
 });
+   
+export const startAddExpense = (expenseData = {}) => {
+    return (dispatch) => {
+        const {
+            description = '',
+            note = '',
+            amount = 0,
+            createdAt = 0
+        } = expenseData;
+        const expense = {description, note, amount, createdAt};
+        
+    return database.ref('expenses').push(expense).then((ref)=> {
+            dispatch(addExpense({
+                id: ref.key,
+                ...expense
+                }));
+        });
+    };
+};
 
 //REMOVE_EXPENSE
 export const removeExpense = ({id} = {}) => ({

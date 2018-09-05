@@ -10,6 +10,8 @@ import 'react-dates/initialize';
 import {addExpense, removeExpense, editExpense} from './actions/expenses';
 import {setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate} from './actions/filters';
 import getVisibleExpenses from './selectors/expenses';
+import './firebase/firebase';
+
 
 const store = configureStore();
 
