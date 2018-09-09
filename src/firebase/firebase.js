@@ -1,5 +1,5 @@
 import * as firebase from 'firebase';
-//import 'firebase/database';
+
 
   
     // Initialize Firebase realtime database

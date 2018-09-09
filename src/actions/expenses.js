@@ -43,6 +43,15 @@ export const removeExpense = ({id} = {}) => ({
        id
    });
    
+
+export const startRemoveExpense = ({id} = {}) => {
+    return (dispatch) => {
+        const deleteitem = `expenses/${id}`;
+        return database.ref(deleteitem).remove().then(()=> { 
+            dispatch(removeExpense({id})) });
+    
+     };
+};
    
 //EDIT_EXPENSE  using the new capabilities to overwrite with spread object (need to add the plugin for babel)
 export const editExpense = (id, updates) => ({
@@ -50,3 +59,25 @@ export const editExpense = (id, updates) => ({
        id,
        updates
    });
+
+
+//SET_EXPENSES
+export const setExpenses = (expenses) => ({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+export const startSetExpenses  = () => {
+    return (dispatch) => {
+       return database.ref('expenses').once('value').then((snapshot)=> {
+        const expenses= [];
+        snapshot.forEach((childSnapshot)=> {
+            expenses.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+            });
+        });
+        dispatch(setExpenses(expenses));
+        });
+    };
+};;

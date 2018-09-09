@@ -7,7 +7,7 @@ import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import 'react-dates/initialize';
-import {addExpense, removeExpense, editExpense} from './actions/expenses';
+import {startSetExpenses} from './actions/expenses';
 import {setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate} from './actions/filters';
 import getVisibleExpenses from './selectors/expenses';
 import './firebase/firebase';
@@ -21,5 +21,10 @@ const jsx = (
     </Provider>
     
 );
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
-ReactDOM.render(jsx, document.getElementById('app'));
+store.dispatch(startSetExpenses()).then(() => {
+    ReactDOM.render(jsx, document.getElementById('app'));
+});
+
+
