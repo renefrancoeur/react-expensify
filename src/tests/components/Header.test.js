@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import {Header} from '../../components/Header';
 
 
-test('Should render Header correctly', () => {
+test('Should render Header correctly ', () => {
 const wrapper = shallow(<Header startLogout={ () =>{ }}/>);
 expect(wrapper).toMatchSnapshot();
 //expect(toJSON(wrapper)).toMatchSnapshot();
